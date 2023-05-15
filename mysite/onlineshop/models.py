@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 class Status(models.Model):
     name = models.CharField(verbose_name="Pavadinimas", max_length=50)
 
+    def __str__(self):
+        return self.name
+
 
 class Customer(models.Model):
     user = models.OneToOneField(to=User, verbose_name="Vartotojas", null=True, blank=True, on_delete=models.CASCADE)
@@ -31,7 +34,7 @@ class Order(models.Model):
     customer = models.ForeignKey(to=Customer, verbose_name="Klientas", on_delete=models.SET_NULL, null=True, blank=True)
     date_ordered = models.DateTimeField(verbose_name="Užsakymo data", auto_now_add=True)
     complete = models.BooleanField(verbose_name="užbaigta", default=False)
-    transaction_id = models.CharField(verbose_name="operacijos id", max_length=100, null=True)
+    transaction_id = models.CharField(verbose_name="pavedimo id", max_length=100, null=True)
     status = models.ForeignKey(to="Status", verbose_name="Būsena", on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
@@ -44,6 +47,11 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(verbose_name="Kiekis", default=0, null=True, blank=True)
     date_added = models.DateTimeField(verbose_name="Pridėjimo data", auto_now_add=True)
 
+    @property
+    def get_total(self):
+        total = self.product.price * self.quantity
+        return total
+
 
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(to=Customer, verbose_name="Klientas", on_delete=models.SET_NULL, null=True)
@@ -53,3 +61,6 @@ class ShippingAddress(models.Model):
     state = models.CharField(verbose_name="Valstybė", max_length=200, null=False)
     zipcode = models.CharField(verbose_name="Pašto kodas", max_length=200, null=False)
     date_added = models.DateTimeField(verbose_name="Užsakymo data", auto_now_add=True)
+
+    def __str__(self):
+        return self.address
