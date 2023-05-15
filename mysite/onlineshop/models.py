@@ -13,6 +13,9 @@ class Customer(models.Model):
     name = models.CharField(verbose_name="Vardas", max_length=200, null=True)
     email = models.CharField(verbose_name="el.paštas", max_length=200)
 
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
     name = models.CharField(verbose_name="Produkto pavadinimas", max_length=200)
