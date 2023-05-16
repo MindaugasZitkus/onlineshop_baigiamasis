@@ -37,6 +37,13 @@ class Order(models.Model):
     transaction_id = models.CharField(verbose_name="pavedimo id", max_length=100, null=True)
     status = models.ForeignKey(to="Status", verbose_name="Būsena", on_delete=models.SET_NULL, null=True)
 
+    def total(self):
+        total = 0
+        lines = self.lines.all()
+        for line in lines:
+            total += line.sum()
+        return total
+
     def __str__(self):
         return f"{self.customer}, {self.date_ordered}, {self.status} "
 
@@ -47,10 +54,10 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(verbose_name="Kiekis", default=0, null=True, blank=True)
     date_added = models.DateTimeField(verbose_name="Pridėjimo data", auto_now_add=True)
 
-    @property
-    def get_total(self):
-        total = self.product.price * self.quantity
-        return total
+    def sum(self):
+        return self.product.price * self.quantity
+
+
 
 
 class ShippingAddress(models.Model):
