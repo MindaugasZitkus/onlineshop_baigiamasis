@@ -1,16 +1,48 @@
+
+
 {% extends "base.html" %}
 
-{% block "title" %}Gėlių asortimentas{% endblock %}
+{% block "title" %} Geles {% endblock %}
 
 {% block "content" %}
+{% load static %}
+<h1>Augalai</h1>
 
-{% for product in products %}
-<a href="{% url 'product' product.id %}">
-<p>{{ product }}</p>
-</a>
-<hr>
+<br>
+ <div class="row">
+      {% for product in products %}
+        <div class="col-md-4 d-flex align-items-stretch">
+          <div class="card mb-4 shadow-sm">
+            {% if product.photo %}
+              <img src="{{ product.photo.url }}" class="img-fluid" alt="..." width="1000" height="1000">
+            {% else %}
+              <img src="{% static 'img/no-image.png' %}" class="img-fluid" alt="..." width="1000" height="1000">
+            {% endif %}
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted"></h6><a href="{% url 'product' product.id %}" {{ product }}>{{ product.name }}</h6></a>
+              <p class="card-text">{{ product.price }}</a></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+<div class="container puslapiai">
+    <nav aria-label="...">
+        {% if products.has_other_pages %}
+            <ul class="pagination pagination-sm justify-content-front">
+                {% for i in products.paginator.page_range %}
+                    {% if products.number == i %}
+                        <li class="page-item active">
+                            <a class="page-link">{{ i }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </nav>
+</div>
 
-{% endfor %}
 {% endblock %}
-
-

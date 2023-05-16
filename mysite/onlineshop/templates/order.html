@@ -7,6 +7,7 @@
 <p><stong>Data: </stong>{{ order.date_ordered }}</p>
 <p><stong>Būsena: </stong>{{ order.status }}</p>
 <hr>
+
 {% for line in order.lines.all %}
 <p>{{ line.product }} ({{ line.product.price }} €) - Kiekis : {{ line.quantity }} : Bendra suma : {{ line.sum }} €</p>
 {% endfor %}
