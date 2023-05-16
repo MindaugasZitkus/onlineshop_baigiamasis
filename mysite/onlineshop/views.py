@@ -3,6 +3,12 @@ from .models import Product, Order
 from django .shortcuts import render, get_object_or_404
 from django.views import generic
 from django.core.paginator import Paginator
+from django.db.models import Q
+
+def search(request):
+    query = request.GET.get('query')
+    search_results = Product.objects.filter(Q(name__icontains=query) | Q(price__icontains=query))
+    return render(request, 'search.html', {'products': search_results, 'query': query})
 
 # Create your views here.
 def products(request):
