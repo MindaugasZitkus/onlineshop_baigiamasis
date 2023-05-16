@@ -43,7 +43,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     product = models.ForeignKey(to=Product, verbose_name="Produktas", on_delete=models.SET_NULL, null=True)
-    order = models.ForeignKey(to=Order, verbose_name="Užsakymas", on_delete=models.SET_NULL, null=True)
+    order = models.ForeignKey(to=Order, verbose_name="Užsakymas", on_delete=models.SET_NULL, null=True, related_name="lines")
     quantity = models.IntegerField(verbose_name="Kiekis", default=0, null=True, blank=True)
     date_added = models.DateTimeField(verbose_name="Pridėjimo data", auto_now_add=True)
 
