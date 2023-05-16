@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block "title" %}Užsakymas{% endblock %}
+
+{% block "content" %}
+<p><stong>Klientas: </stong>{{ order.customer }}</p>
+<p><stong>Data: </stong>{{ order.date_ordered }}</p>
+<p><stong>Būsena: </stong>{{ order.status }}</p>
+
+{% endblock %}
+
+
