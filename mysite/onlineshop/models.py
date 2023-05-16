@@ -38,7 +38,7 @@ class Order(models.Model):
     status = models.ForeignKey(to="Status", verbose_name="Būsena", on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return str(self.id)
+        return f"{self.customer}, {self.date_ordered}, {self.status} "
 
 
 class OrderItem(models.Model):
