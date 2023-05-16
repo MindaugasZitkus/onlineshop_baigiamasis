@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block "title" %}Gėlių asortimentas{% endblock %}
+
+{% block "content" %}
+
+{% for product in products %}
+<p>{{ product }}</p>
+<hr>
+
+{% endfor %}
+{% endblock %}
+
+
