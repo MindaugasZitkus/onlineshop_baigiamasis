@@ -3,14 +3,9 @@
 {% block "title" %}Gėlių asortimentas{% endblock %}
 
 {% block "content" %}
+<p><stong>Pavadinimas: </stong>{{ product.name }}</p>
+<p><stong>Kaina: </stong>{{ product.price }}</p>
 
-{% for product in products %}
-<a href="{% url 'product' product.id %}">
-<p>{{ product }}</p>
-</a>
-<hr>
-
-{% endfor %}
 {% endblock %}
 
 
