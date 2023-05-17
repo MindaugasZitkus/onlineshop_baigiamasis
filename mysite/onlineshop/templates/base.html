@@ -51,9 +51,9 @@
                     </svg>
                     {{ user.get_username }}</a></li>
                 <li class="nav-item"><a class="nav-link" href="">Mano užsakymai</a></li>
-                <li class="nav-item"><a class="nav-link" href="">Atsijungti</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Atsijungti</a></li>
                 {% else %}
-                <!--                <li class="nav-item"><a class="nav-link" href="">Prisijungti</a></li>-->
+                                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Prisijungti</a></li>
 
 
                 <button class="btn btn-outline-dark" type="submit">
