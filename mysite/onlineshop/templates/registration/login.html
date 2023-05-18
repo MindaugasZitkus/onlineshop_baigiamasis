@@ -14,22 +14,36 @@
     {% endif %}
   {% endif %}
 
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-      <tr>
-        <td>Vartotojas: </td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>Slaptažodis: </td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="Prisijungti" />
-    <input type="hidden" name="next" value="{{ next }}" />
-  </form>
+<style>
+  .border-success {
+    margin-bottom: 20px; /* Add a margin at the bottom */
+  }
 
-  <p><a href="{% url 'password_reset' %}">Pamiršote slaptažodį?</a></p>
+  .border-danger {
+    margin-top: 20px; /* Add a margin at the top */
+  }
+</style>
+
+<form method="post" action="{% url 'login' %}" class="border rounded p-4 border-success">
+  {% csrf_token %}
+  <table>
+    <tr>
+      <td>Vartotojas: </td>
+      <td>{{ form.username }}</td>
+    </tr>
+    <tr>
+      <td>Slaptažodis: </td>
+      <td>{{ form.password }}</td>
+    </tr>
+  </table>
+  <input type="submit" value="Prisijungti" class="btn btn-success" />
+  <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+<div class="border border-danger p-3" style="margin-top: 20px;">
+  <p><a href="{% url 'password_reset' %}" class="text-danger">Pamiršote slaptažodį?</a></p>
+</div>
+
+
 
 {% endblock %}

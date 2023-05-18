@@ -6,6 +6,33 @@
 
 {% block "content" %}
 {% load static %}
+<head>
+    <style>
+.green-pagination .page-item {
+    margin: 0.2rem;
+}
+
+.green-pagination .page-link {
+    color: limegreen;
+    border-color: limegreen;
+    background-color: white;
+    padding: 0.4rem 0.6rem;
+}
+
+.green-pagination .page-link:hover,
+.green-pagination .page-link:focus {
+    color: white;
+    background-color: limegreen;
+    border-color: limegreen;
+}
+
+.green-pagination .page-item.active .page-link {
+    color: white;
+    background-color: limegreen;
+    border-color: limegreen;
+}
+    </style>
+</head>
  <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
@@ -27,7 +54,7 @@
               <img src="{% static 'img/no-image.png' %}" class="img-fluid" alt="..." width="1000" height="1000">
             {% endif %}
             <div class="card-body">
-              <h6 class="card-subtitle mb-2 text-muted"></h6><a href="{% url 'product' product.id %}" {{ product }}>{{ product.name }}</h6></a>
+             <a href="{% url 'product' product.id %}" style="color: green;">{{ product.name }}</a>
               <p class="card-text">{{ product.price }}€</a></p>
             </div>
           </div>
@@ -36,11 +63,16 @@
 <div class="container puslapiai">
     <nav aria-label="...">
         {% if products.has_other_pages %}
-            <ul class="pagination pagination-sm justify-content-front">
+            <ul class="pagination justify-content-center green-pagination">
+                {% if products.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
                 {% for i in products.paginator.page_range %}
                     {% if products.number == i %}
                         <li class="page-item active">
-                            <a class="page-link">{{ i }}</a>
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
                         </li>
                     {% else %}
                         <li class="page-item">
@@ -48,9 +80,23 @@
                         </li>
                     {% endif %}
                 {% endfor %}
+                {% if products.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.next_page_number }}">Next</a>
+                    </li>
+                {% endif %}
             </ul>
         {% endif %}
     </nav>
 </div>
 
+
+    <style>
+        .green-pagination .page-link {
+            color: green;
+        }
+
+        .green-pagination .page-link:hover {
+            color: dark green;
+        }
 {% endblock %}

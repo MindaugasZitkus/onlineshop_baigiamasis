@@ -1,0 +1,7 @@
+.green-pagination .page-link {
+    color: green;
+}
+
+.green-pagination .page-link:hover {
+    color: darkgreen;
+}
