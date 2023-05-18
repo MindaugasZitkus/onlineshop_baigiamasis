@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block "title" %}Mano Užsakymai{% endblock %}
+
+{% block "content" %}
+
+{% for order in orders %}
+<a href="{% url 'order' order.id %}">
+<p>{{ order }}</p>
+</a>
+<hr>
+{% endfor %}
+{% endblock %}
+
+

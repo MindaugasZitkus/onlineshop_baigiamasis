@@ -36,3 +36,16 @@ class OrderDetailView(generic.DetailView):
     model = Order
     template_name = "order.html"
     context_object_name = 'order'
+
+from django.contrib.auth import get_user_model
+
+class MyOrderListView(generic.ListView):
+    model = Order
+    template_name = 'my_orders.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        User = get_user_model()
+        customer = User.objects.get(username=self.request.user.username).customer
+        return Order.objects.filter(customer=customer)
+
