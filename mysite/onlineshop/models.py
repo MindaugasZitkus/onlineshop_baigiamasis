@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from tinymce.models import HTMLField
 
 
 
@@ -27,6 +28,7 @@ class Product(models.Model):
     # digital = models.BooleanField(default=False, null=True, blank=True)
     # image = models.ImageField(verbose_name="Nuotrauka", null=True, blank=True)
     photo = models.ImageField(verbose_name="Nuotrauka", upload_to="products", null=True, blank=True)
+    description = HTMLField(verbose_name="Aprašymas", null=True, blank=True)
 
     def __str__(self):
         return self.name
