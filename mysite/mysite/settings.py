@@ -41,6 +41,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'onlineshop',
     'tinymce',
+    # 'addtocart',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -139,6 +140,8 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'
+
+CART_SESSION_ID = 'cart'
 
 TINYMCE_DEFAULT_CONFIG = {
     'height': 360,

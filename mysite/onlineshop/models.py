@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
+import json
 
 
 
@@ -25,13 +26,21 @@ class Customer(models.Model):
 class Product(models.Model):
     name = models.CharField(verbose_name="Produkto pavadinimas", max_length=200)
     price = models.FloatField(verbose_name="Kaina")
-    # digital = models.BooleanField(default=False, null=True, blank=True)
+    digital = models.BooleanField(default=False, null=True, blank=True)
     # image = models.ImageField(verbose_name="Nuotrauka", null=True, blank=True)
     photo = models.ImageField(verbose_name="Nuotrauka", upload_to="products", null=True, blank=True)
     description = HTMLField(verbose_name="Aprašymas", null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def photoURL(self):
+        try:
+            url = self.photo.url
+        except:
+            url = ''
+        return url
 
 
 class Order(models.Model):
@@ -51,6 +60,27 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.customer}, {self.date_ordered}, {self.status} "
 
+    @property
+    def shipping(self):
+        shipping = False
+        orderitems = self.orderitem_set.all()
+        for i in orderitems:
+            if i.product.digital == False:
+                shipping = True
+        return shipping
+
+    @property
+    def get_cart_total(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([item.get_total for item in orderitems])
+        return total
+
+    @property
+    def get_cart_items(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([item.quantity for item in orderitems])
+        return total
+
 
 class OrderItem(models.Model):
     product = models.ForeignKey(to=Product, verbose_name="Produktas", on_delete=models.SET_NULL, null=True)
@@ -60,6 +90,11 @@ class OrderItem(models.Model):
 
     def sum(self):
         return self.product.price * self.quantity
+
+    @property
+    def get_total(self):
+        total = self.product.price * self.quantity
+        return total
 
 
 
@@ -75,3 +110,88 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+
+def cookieCart(request):
+    # Create empty cart for now for non-logged in user
+    try:
+        cart = json.loads(request.COOKIES['cart'])
+    except:
+        cart = {}
+        print('CART:', cart)
+
+    items = []
+    order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': False}
+    cartItems = order['get_cart_items']
+
+    for i in cart:
+        # We use try block to prevent items in cart that may have been removed from causing error
+        try:
+            if (cart[i]['quantity'] > 0):  # items with negative quantity = lot of freebies
+                cartItems += cart[i]['quantity']
+
+                product = Product.objects.get(id=i)
+                total = (product.price * cart[i]['quantity'])
+
+                order['get_cart_total'] += total
+                order['get_cart_items'] += cart[i]['quantity']
+
+                item = {
+                    'id': product.id,
+                    'product': {'id': product.id, 'name': product.name, 'price': product.price,
+                                'imageURL': product.imageURL}, 'quantity': cart[i]['quantity'],
+                    'digital': product.digital, 'get_total': total,
+                }
+                items.append(item)
+
+                if product.digital == False:
+                    order['shipping'] = True
+        except:
+            pass
+
+    return {'cartItems': cartItems, 'order': order, 'items': items}
+
+
+def cartData(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        cookieData = cookieCart(request)
+        cartItems = cookieData['cartItems']
+        order = cookieData['order']
+        items = cookieData['items']
+
+    return {'cartItems': cartItems, 'order': order, 'items': items}
+
+
+def guestOrder(request, data):
+    name = data['form']['name']
+    email = data['form']['email']
+
+    cookieData = cookieCart(request)
+    items = cookieData['items']
+
+    customer, created = Customer.objects.get_or_create(
+        email=email,
+    )
+    customer.name = name
+    customer.save()
+
+    order = Order.objects.create(
+        customer=customer,
+        complete=False,
+    )
+
+    for item in items:
+        product = Product.objects.get(id=item['id'])
+        orderItem = OrderItem.objects.create(
+            product=product,
+            order=order,
+            quantity=(item['quantity'] if item['quantity'] > 0 else -1 * item['quantity']),
+            # negative quantity = freebies
+        )
+    return customer, order
+

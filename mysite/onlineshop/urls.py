@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
 from . import views
-from django.conf.urls.static import static, settings
+from django.conf.urls.static import static
+from django.conf import settings
+from . import views
+
 
 urlpatterns = [
     path('', views.products, name="products"),
@@ -10,5 +13,9 @@ urlpatterns = [
     path('orders/<int:pk>', views.OrderDetailView.as_view(), name="order"),
     path('search/', views.search, name='search'),
     path('myorders/', views.MyOrderListView.as_view(), name="myorders"),
-] + (static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) +
-    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+    path('cart/', views.cart, name="cart"),
+    path('checkout/', views.checkout, name="checkout"),
+]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

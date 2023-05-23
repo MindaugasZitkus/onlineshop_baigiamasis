@@ -31,6 +31,7 @@
     background-color: limegreen;
     border-color: limegreen;
 }
+
     </style>
 </head>
  <header class="bg-dark py-5">
@@ -48,14 +49,15 @@
       {% for product in products %}
         <div class="col-md-4 d-flex align-items-stretch">
           <div class="card mb-4 shadow-sm">
-            {% if product.photo %}
+            {% if product.photoURL %}
               <img src="{{ product.photo.url }}" class="img-fluid" alt="..." width="1000" height="1000">
             {% else %}
               <img src="{% static 'img/no-image.png' %}" class="img-fluid" alt="..." width="1000" height="1000">
             {% endif %}
             <div class="card-body">
-             <a href="{% url 'product' product.id %}" style="color: green;">{{ product.name }}</a>
-              <p class="card-text">{{ product.price }}€</a></p>
+             <a href="{% url 'product' product.id %}" style="color: green;">{{ product.name }} </a>
+              <p class="card-text">{{ product.price }}€ </a></p>
+                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
             </div>
           </div>
         </div>
