@@ -2,6 +2,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block "content" %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <div class="row">
         <div class="col-lg-12">
             <div class="box-element">
@@ -12,8 +13,8 @@
                 <br>
                 <table class="table">
                     <tr>
-                        <th><h5>Items: <strong>{{ order.get_cart_items }}</strong></h5></th>
-                        <th><h5>Total:<strong> ${{ order.get_cart_total|floatformat:2 }}</strong></h5></th>
+                        <th><h5>Prekės: <strong>{{ order.get_cart_items }}</strong></h5></th>
+                        <th><h5>Bendra suma:<strong> ${{ order.get_cart_total|floatformat:2 }}</strong></h5></th>
                         <th>
                             <a style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Atsiskaityti</a>
                         </th>
