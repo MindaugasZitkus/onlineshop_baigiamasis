@@ -8,6 +8,9 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load static %}
+
+
     	<script type="text/javascript">
 		var user = '{{request.user}}'
 
@@ -57,7 +60,6 @@
 		console.log('Cart:', cart)
 
 	</script>
-
     <!-- Add additional CSS in static file -->
     {% load static %}
     <!--  <link rel="stylesheet" href="{% static 'css/styles.css' %}">-->
@@ -114,6 +116,8 @@
     <i class="bi-cart-fill me-1"></i>
     Cart
     <span class="badge bg-dark text-white ms-1 rounded-pill">0 </span>
+
+      <p id="cart-total">{{cartItems}}</p>
   </button>
 </a>
                 </li>
@@ -136,6 +140,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+<script src=" https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js "></script>
+{% load static %}
+<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 {% comment %}
 <!--<script type="text/javascript" src="{% templates 'js/cart.js' %}"></script>-->
 {% endcomment %}
