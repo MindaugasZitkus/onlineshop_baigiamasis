@@ -3,7 +3,7 @@ from django.urls import path, include
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
-from . import views
+
 
 
 
@@ -19,6 +19,7 @@ urlpatterns = [
 	path('process_order/', views.processOrder, name="process_order"),
     path('checkout/', views.checkout, name="checkout"),
     path('register/', views.register, name='register'),
+    path('profile/', views.profile, name='profile'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

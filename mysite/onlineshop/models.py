@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
+from PIL import Image
 
 
 
@@ -110,8 +111,31 @@ class ShippingAddress(models.Model):
     def __str__(self):
         return self.address
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    photo = models.ImageField(default="profile_pics/default.png", upload_to="profile_pics")
 
+    def __str__(self):
+        return f"{self.user.username} profilis"
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.photo.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.photo.path)
+
+class OrderComment(models.Model):
+    order = models.ForeignKey(to="Order", on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(to=User, verbose_name="Autorius", on_delete=models.SET_NULL, null=True, blank=True)
+    date_created = models.DateTimeField(verbose_name="Data", auto_now_add=True)
+    content = models.TextField(verbose_name='Tekstas', max_length=5000)
+
+    class Meta:
+        verbose_name = "Komentaras"
+        verbose_name_plural = 'Komentarai'
+        ordering = ['-date_created']
 
 
 

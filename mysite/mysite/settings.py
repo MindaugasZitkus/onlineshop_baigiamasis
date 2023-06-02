@@ -14,6 +14,7 @@ from pathlib import Path
 from .my_settings import SECRET_KEY, EMAIL_HOST_PASSWORD, EMAIL_HOST_USER
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,6 +44,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'onlineshop',
     'tinymce',
+    'crispy_forms',
+    'crispy_bootstrap4',
     # 'addtocart',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -187,3 +190,5 @@ TINYMCE_DEFAULT_CONFIG = {
     'statusbar': True,
 
     }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
