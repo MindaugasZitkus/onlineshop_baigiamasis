@@ -6,7 +6,6 @@ from django.conf import settings
 
 
 
-
 urlpatterns = [
     path('', views.products, name="products"),
     path('products/<int:product_id>', views.product, name="product"),
@@ -20,6 +19,7 @@ urlpatterns = [
     path('checkout/', views.checkout, name="checkout"),
     path('register/', views.register, name='register'),
     path('profile/', views.profile, name='profile'),
+    path('blog/', views.blog_page, name='blog'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

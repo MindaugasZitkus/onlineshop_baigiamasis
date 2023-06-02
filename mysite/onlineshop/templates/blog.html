@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block "content" %}
+
+<h1>Patarimai</h1>
+<hr>
+{% for blog in blogs %}
+  <div class="blog-post">
+    <h2>{{ blog.title }}</h2>
+    <p>{{ blog.content }}</p>
+    <p>Created at: {{ blog.created_at }}</p>
+  </div>
+{% endfor %}
+
+{% endblock %}

@@ -14,6 +14,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from .forms import OrderCommentForm, UserUpdateForm, ProfileUpdateForm
+from .models import Blog
 
 def search(request):
     query = request.GET.get('query')
@@ -240,3 +241,10 @@ def profile(request):
         'p_form': p_form,
     }
     return render(request, 'profile.html', context)
+
+
+
+
+def blog_page(request):
+    blogs = Blog.objects.all()
+    return render(request, 'blog.html', {'blogs': blogs})
