@@ -1,14 +1,17 @@
 from django.shortcuts import render
 from .models import *
-from django .shortcuts import render, get_object_or_404
+from django .shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
 import json
 from django.http import JsonResponse
-from .models import cookieCart, cartData, guestOrder
+import data
 import datetime
-from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
+from .utils import cookieCart, cartData, guestOrder
+from django.contrib import messages
+from django.views.decorators.csrf import csrf_protect
 
 def search(request):
     query = request.GET.get('query')
@@ -20,17 +23,30 @@ def products(request):
     paginator = Paginator(Product.objects.all(), 6)
     page_number = request.GET.get('page')
     paged_products = paginator.get_page(page_number)
+
     context = {
         "products": paged_products,
+
+        
     }
     return render(request, "products.html", context=context)
+
+# def store(request):
+# 	data = cartData(request)
+#
+# 	cartItems = data['cartItems']
+# 	order = data['order']
+# 	items = data['items']
+#
+# 	products = Product.objects.all()
+# 	context = {'products':products, 'cartItems':cartItems}
+# 	return render(request, 'store/store.html', context)
 
 def product(request, product_id):
     context = {
         "product": get_object_or_404(Product, pk=product_id)
     }
     return render(request, 'product.html', context=context)
-
 
 
 
@@ -59,26 +75,51 @@ class MyOrderListView(generic.ListView):
         return Order.objects.filter(customer=customer)
 
 
+def cart(request):
+    data = cartData(request)
+
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
+
+    context = {'items': items, 'order': order, 'cartItems': cartItems}
+    return render(request, 'cart.html', context)
+
+
+
+
+
 # def cart(request):
-#     data = cartData(request)
+#     if request.user.is_authenticated:
+#         customer = request.user.customer
+#         order, created = Order.objects.get_or_create(customer=customer, complete=False)
+#         items = order.orderitem_set.all()
+#     else:
+#         items = []
 #
-#     cartItems = data['cartItems']
-#     order = data['order']
-#     items = data['items']
+#         # Create an item and add it to the items list
+#         item = {
+#             'name': 'Sample Item',
+#             'price': 10.99,
+#         }
+#         items.append(item)
 #
-#     context = {'items': items, 'order': order, 'cartItems': cartItems}
+#     # Return the added items
+#     added_items = [item for item in items if item in items]
+#     context = {'items': added_items}
 #     return render(request, 'cart.html', context)
 
+# def cart(request):
+#     if request.user.is_authenticated:
+#         customer = request.user.customer
+#         order, created = Order.objects.get_or_create(customer=customer, complete=False)
+#         items = order.orderitem_set.all()
+#     else:
+#         items = []
+#
+#     context = {'items': items}
+#     return render(request, 'cart.html', context)
 
-def cart(request):
-	data = cartData(request)
-
-	cartItems = data['cartItems']
-	order = data['order']
-	items = data['items']
-
-	context = {'items':items, 'order':order, 'cartItems':cartItems}
-	return render(request, 'cart.html', context)
 
 
 
@@ -94,29 +135,29 @@ def checkout(request):
 
 
 def updateItem(request):
-    data = json.loads(request.body)
-    productId = data['productId']
-    action = data['action']
-    print('Action:', action)
-    print('Product:', productId)
+	data = json.loads(request.body)
+	productId = data['productId']
+	action = data['action']
+	print('Action:', action)
+	print('Product:', productId)
 
-    customer = request.user.customer
-    product = Product.objects.get(id=productId)
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+	customer = request.user.customer
+	product = Product.objects.get(id=productId)
+	order, created = Order.objects.get_or_create(customer=customer, complete=False)
 
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+	orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
-    if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
-    elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)
+	if action == 'add':
+		orderItem.quantity = (orderItem.quantity + 1)
+	elif action == 'remove':
+		orderItem.quantity = (orderItem.quantity - 1)
 
-    orderItem.save()
+	orderItem.save()
 
-    if orderItem.quantity <= 0:
-        orderItem.delete()
+	if orderItem.quantity <= 0:
+		orderItem.delete()
 
-    return JsonResponse('Item was added', safe=False)
+	return JsonResponse('Item was added', safe=False)
 
 
 
@@ -148,3 +189,32 @@ def processOrder(request):
 		)
 
 	return JsonResponse('Payment submitted..', safe=False)
+
+@csrf_protect
+def register(request):
+    if request.method == "POST":
+        # pasiimame reikšmes iš registracijos formos
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+        # tikriname, ar sutampa slaptažodžiai
+        if password == password2:
+            # tikriname, ar neužimtas username
+            if User.objects.filter(username=username).exists():
+                messages.error(request, f'Vartotojo vardas {username} užimtas!')
+                return redirect('register')
+            else:
+                # tikriname, ar nėra tokio pat email
+                if User.objects.filter(email=email).exists():
+                    messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
+                    return redirect('register')
+                else:
+                    # jeigu viskas tvarkoje, sukuriame naują vartotoją
+                    User.objects.create_user(username=username, email=email, password=password)
+                    messages.info(request, f'Vartotojas {username} užregistruotas!')
+                    return redirect('login')
+        else:
+            messages.error(request, 'Slaptažodžiai nesutampa!')
+            return redirect('register')
+    return render(request, 'registration/register.html')

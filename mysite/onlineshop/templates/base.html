@@ -108,6 +108,7 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'myorders' %}">Mano užsakymai</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Atsijungti</a></li>
                 {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registruotis</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Prisijungti</a></li>
 
 
@@ -143,8 +144,6 @@
 <script src=" https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js "></script>
 {% load static %}
 <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
-{% comment %}
-<!--<script type="text/javascript" src="{% templates 'js/cart.js' %}"></script>-->
-{% endcomment %}
+
 </body>
 </html>

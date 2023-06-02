@@ -35,8 +35,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-SESSION_COOKIE_AGE = 86400
-CART_SESSION_ID = 'carts'
+# SESSION_COOKIE_AGE = 86400
+# CART_SESSION_ID = 'carts'
 
 # Application definition
 
@@ -129,6 +129,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

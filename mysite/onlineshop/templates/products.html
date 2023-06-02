@@ -111,18 +111,11 @@
               <p class="card-text">{{ product.price }}€ </a></p>
                 <form method="post" action="{% url 'cart' %}">
   {% csrf_token %}
-  <button type="submit"  data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+  <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
 </form>
 
                 <p id="cart-total">{{cartItems}}</p>
-                {% comment %}
-<!--                <form method="post" action="{% url 'add_to_cart' %}">-->
 
-  <!-- Form fields and other necessary input elements -->
-  {% csrf_token %}
-                    {% endcomment %}
-<!--  <button type="submit">Add to Cart</button>-->
-<!--</form>-->
             </div>
           </div>
         </div>
