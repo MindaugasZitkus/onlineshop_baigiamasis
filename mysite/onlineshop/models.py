@@ -50,6 +50,7 @@ class Order(models.Model):
     transaction_id = models.CharField(verbose_name="pavedimo id", max_length=100, null=True)
     status = models.ForeignKey(to="Status", verbose_name="Būsena", on_delete=models.SET_NULL, null=True)
 
+
     def total(self):
         total = 0
         lines = self.lines.all()

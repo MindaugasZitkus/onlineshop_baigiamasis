@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{% block "title" %}{% endblock %}</title>
+    <title>{% block "title" %}{% endblock %} {% load static %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    {% load static %}
 
 
-    <script type="text/javascript">
+
+
+	<script type="text/javascript">
 		var user = '{{request.user}}'
 
 		function getToken(name) {
@@ -59,8 +60,7 @@
 		}
 		console.log('Cart:', cart)
 
-
-    </script>
+	</script>
     <!-- Add additional CSS in static file -->
     {% load static %}
     <!--  <link rel="stylesheet" href="{% static 'css/styles.css' %}">-->
@@ -144,8 +144,8 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 <script src=" https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js "></script>
-{% load static %}
 <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
 
 </body>
 </html>

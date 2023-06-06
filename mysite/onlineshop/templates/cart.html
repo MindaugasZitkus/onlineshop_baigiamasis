@@ -32,26 +32,26 @@
                     <div style="flex:1"><strong>Kiekis</strong></div>
                     <div style="flex:1"><strong>Bendra suma</strong></div>
                 </div>
-                {% for item in order.items %}
-                <div class="cart-row">
-                    <div style="flex:2"><img class="row-image" src="{{ item.product.imageURL }}"></div>
-                    <div style="flex:2"><p>{{ item.product.name }}</p></div>
-                    <div style="flex:1"><p>${{ item.product.price|floatformat:2 }}</p></div>
-                    <div style="flex:1">
-                        <p class="quantity">{{ item.quantity }}</p>
-                        <div class="quantity">
-                            <img data-product="{{ item.product.id }}" data-action="add" class="chg-quantity update-cart" src="{% static 'images/arrow-up.png' %}">
+<div class="col-lg-6">
+			<div class="box-element">
 
-                            <img data-product="{{ item.product.id }}" data-action="remove" class="chg-quantity update-cart" src="{% static 'images/arrow-down.png' %}">
-                        </div>
-                    </div>
-                    <div style="flex:1"><p>${{ item.get_total|floatformat:2 }}</p></div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-{% endblock  %}
+				<hr>
+				<h3>Jūsų užsakymas</h3>
+				<hr>
+				{% for item in items %}
+				<div class="cart-row">
+					<div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+					<div style="flex:2"><p>{{item.product.name}}</p></div>
+					<div style="flex:1"><p>${{item.product.price|floatformat:2}}</p></div>
+					<div style="flex:1"><p>x{{item.quantity}}</p></div>
+				</div>
+				{% endfor %}
+				<h5>Prekių skaičius:   {{order.get_cart_items}}</h5>
+				<h5>Bendra suma:   ${{order.get_cart_total|floatformat:2}}</h5>
+			</div>
+		</div>
+	</div>
+{% endblock %}
 
 
 
