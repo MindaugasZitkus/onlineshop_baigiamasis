@@ -11,6 +11,7 @@
       <p class="full-text" style="display: none;">{{ blog.content }}</p>
       <p>Created at: {{ blog.created_at }}</p>
       <button class="read-more-btn custom-button">Skaityti daugiau</button>
+        <hr>
     </div>
   {% endfor %}
 
@@ -30,10 +31,13 @@
   padding: 10px 20px; /* tarpas */
   border: none; /* Istrinti mygtuko sonus */
   cursor: pointer; /*  */
+  margin-bottom: 20px
 }
 
 .custom-button:hover {
   background-color: #45a049; /* Pakeisti spalva */
 }
 </style>
+
+
 {% endblock %}
