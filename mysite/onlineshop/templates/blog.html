@@ -3,7 +3,7 @@
 
 {% block "content" %}
   <h1>Patarimai</h1>
-  <hr>
+
   {% for blog in blogs %}
     <div class="blog-post">
       <h2>{{ blog.title }}</h2>
@@ -11,7 +11,6 @@
       <p class="full-text" style="display: none;">{{ blog.content }}</p>
       <p>Created at: {{ blog.created_at }}</p>
       <button class="read-more-btn custom-button">Skaityti daugiau</button>
-        <hr>
     </div>
   {% endfor %}
 
@@ -21,7 +20,13 @@
   crossorigin="anonymous"></script>
 <script src="{% static 'js/blog.js' %}"></script>
 
-
+<style>
+  .blog-post {
+  border: 1px solid green;
+  padding: 10px;
+  margin-bottom: 20px
+}
+</style>
 
 
 <style>

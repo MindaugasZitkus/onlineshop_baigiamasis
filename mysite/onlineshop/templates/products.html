@@ -1,5 +1,3 @@
-
-
 {% extends "base.html" %}
 
 {% block "title" %} Geles {% endblock %}
@@ -55,7 +53,8 @@
 		}
 		console.log('Cart:', cart)
 
-	</script>
+
+</script>
 
 <head>
     <style>
@@ -83,73 +82,76 @@
     border-color: limegreen;
 }
 
+
     </style>
 
 </head>
- <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Apsipirk su stiliumi</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">Augalai suteiks jūsų namams bei sodui jaukumo</p>
-                </div>
-            </div>
-        </header>
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Apsipirk su stiliumi</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Augalai suteiks jūsų namams bei sodui jaukumo</p>
+        </div>
+    </div>
+</header>
 <h1></h1>
 
 <br>
- <div class="row">
-      {% for product in products %}
-        <div class="col-md-4 d-flex align-items-stretch">
-          <div class="card mb-4 shadow-sm">
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4 d-flex align-items-stretch">
+        <div class="card mb-4 shadow-sm">
             {% if product.photoURL %}
-              <img src="{{ product.photo.url }}" class="img-fluid" alt="..." width="1000" height="1000">
+            <img src="{{ product.photo.url }}" class="img-fluid" alt="..." width="1000" height="1000">
             {% else %}
-              <img src="{% static 'img/no-image.png' %}" class="img-fluid" alt="..." width="1000" height="1000">
+            <img src="{% static 'img/no-image.png' %}" class="img-fluid" alt="..." width="1000" height="1000">
             {% endif %}
             <div class="card-body">
-             <a href="{% url 'product' product.id %}" style="color: green;">{{ product.name }} </a>
-              <p class="card-text">{{ product.price }}€ </a></p>
+                <a href="{% url 'product' product.id %}" style="color: green;">{{ product.name }} </a>
+                <p class="card-text">{{ product.price }}€ </a></p>
                 <form method="post" action="{% url 'cart' %}">
-  {% csrf_token %}
-  <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
-</form>
+                    {% csrf_token %}
+                    <button data-product="{{ product.id }}" data-action="add"
+                            class="btn btn-outline-secondary add-btn update-cart">Add to Cart
+                    </button>
+                </form>
 
                 <p id="cart-total">{{cartItems}}</p>
 
             </div>
-          </div>
         </div>
-      {% endfor %}
-<div class="container puslapiai">
-    <nav aria-label="...">
-        {% if products.has_other_pages %}
+    </div>
+    {% endfor %}
+    <div class="container puslapiai">
+        <nav aria-label="...">
+            {% if products.has_other_pages %}
             <ul class="pagination justify-content-center green-pagination">
                 {% if products.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a>
-                    </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a>
+                </li>
                 {% endif %}
                 {% for i in products.paginator.page_range %}
-                    {% if products.number == i %}
-                        <li class="page-item active">
-                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                        </li>
-                    {% else %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                        </li>
-                    {% endif %}
+                {% if products.number == i %}
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+                {% endif %}
                 {% endfor %}
                 {% if products.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ products.next_page_number }}">Next</a>
-                    </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ products.next_page_number }}">Next</a>
+                </li>
                 {% endif %}
             </ul>
-        {% endif %}
-    </nav>
-</div>
-<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+            {% endif %}
+        </nav>
+    </div>
+    <script src="{% static 'js/cart.js' %}"></script>
 
     <style>
         .green-pagination .page-link {
@@ -159,5 +161,8 @@
         .green-pagination .page-link:hover {
             color: dark green;
         }
+        </style>
+        <script src="{% static 'js/blog.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 {% endblock %}
 
