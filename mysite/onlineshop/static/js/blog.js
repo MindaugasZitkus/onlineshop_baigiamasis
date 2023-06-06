@@ -6,11 +6,11 @@ $(document).ready(function() {
     if ($shortText.is(':visible')) {
       $shortText.hide();
       $fullText.show();
-      $(this).text('Read Less');
+      $(this).text('Skaityti mažiau');
     } else {
       $fullText.hide();
       $shortText.show();
-      $(this).text('Read More');
+      $(this).text('Skaityti daugiau');
     }
   });
 });

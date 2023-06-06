@@ -18,25 +18,10 @@
   src="https://code.jquery.com/jquery-3.7.0.js"
   integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
   crossorigin="anonymous"></script>
+<script src="{% static 'js/blog.js' %}"></script>
 
-  <script>
-    $(document).ready(function() {
-      $('.read-more-btn').click(function() {
-        var $shortText = $(this).siblings('.short-text');
-        var $fullText = $(this).siblings('.full-text');
 
-        if ($shortText.is(':visible')) {
-          $shortText.hide();
-          $fullText.show();
-          $(this).text('Skaityti mažiau');
-        } else {
-          $fullText.hide();
-          $shortText.show();
-          $(this).text('Skaityti daugiau');
-        }
-      });
-    });
-  </script>
+
 
 <style>
   .custom-button {
@@ -48,7 +33,7 @@
 }
 
 .custom-button:hover {
-  background-color: #45a049; /* Change the background color on hover */
+  background-color: #45a049; /* Pakeisti spalva */
 }
 </style>
 {% endblock %}
