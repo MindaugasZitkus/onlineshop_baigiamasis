@@ -10,9 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-
-
-	<script type="text/javascript">
+    <script type="text/javascript">
 		var user = '{{request.user}}'
 
 		function getToken(name) {
@@ -60,7 +58,8 @@
 		}
 		console.log('Cart:', cart)
 
-	</script>
+
+    </script>
     <!-- Add additional CSS in static file -->
     {% load static %}
     <!--  <link rel="stylesheet" href="{% static 'css/styles.css' %}">-->
@@ -85,6 +84,7 @@
     border-color: green;
 }
 
+
         </style>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,30 +99,30 @@
 
 
                 </li>
-               {% if user.is_authenticated %}
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'profile' %}">
-            <svg class="bi bi-person" width="1.1em" height="1.1em" viewBox="0 0 16 16" fill="currentColor"
-                 xmlns="http://www.w3.org/2000/svg">
-                <!-- SVG path code -->
-            </svg>
-            {{ user.get_username }}
-        </a>
-    </li>
-    <li class="nav-item"><a class="nav-link" href="{% url 'myorders' %}">Mano užsakymai</a></li>
-    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Atsijungti</a></li>
-{% else %}
-    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registruotis</a></li>
-    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Prisijungti</a></li>
-{% endif %}
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">
+                        <svg class="bi bi-person" width="1.1em" height="1.1em" viewBox="0 0 16 16" fill="currentColor"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <!-- SVG path code -->
+                        </svg>
+                        {{ user.get_username }}
+                    </a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'myorders' %}">Mano užsakymai</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Atsijungti</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registruotis</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Prisijungti</a></li>
+                {% endif %}
 
-<a href="{% url 'cart' %}">
-    <button class="btn btn-outline-dark" type="submit">
-        <i class="bi-cart-fill me-1"></i>
-        Cart
-        <span class="badge bg-dark text-white ms-1 rounded-pill">{{ cartItems }}</span>
-    </button>
-</a>
+                <a href="{% url 'cart' %}">
+                    <button class="btn btn-outline-dark" type="submit">
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">{{ cartItems }}</span>
+                    </button>
+                </a>
                 </li>
 
 

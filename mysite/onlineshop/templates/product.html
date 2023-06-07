@@ -3,34 +3,35 @@
 {% block "title" %}Gėlių asortimentas{% endblock %}
 
 {% block "content" %}
-<p><stong>Pavadinimas: </stong>{{ product.name }}</p>
-<p><stong>Kaina: </stong>{{ product.price }}€</p>
-
-
-
+<p>
+    <stong>Pavadinimas:</stong>
+    {{ product.name }}
+</p>
+<p>
+    <stong>Kaina:</stong>
+    {{ product.price }}€
+</p>
 
 
 {% load static %}
 {% if product.photo %}
 <div>
-    <img src="{{ product.photo.url }}" class="img-fluid" alt="..." width="600" height="600">
-    {% else %}
-    <img src="{% static 'img/no-image.png' %}" class="img-fluid" alt="..." width="600" height="600">
-    {% endif %}
-</div>
-
-<br>{% comment %}
-<h1>{{ product.id }}</h1>
-<ul>
-    <li><strong>Augalo pavadinimas: </strong>{{ product.name }}</li>
-    <li><strong>Kaina: </strong>{{ product.price }}</li>
-    <form action ="{% url "cart:cart_add" product.id %}" method = "post">
-                {{ cart_product_form }}
-                {% csrf_token %}
-                <input type ="submit" value="Add to cart">
+    <div>
+        <form method="post" action="{% url 'cart' %}">
+            {% csrf_token %}
+            <button data-product="{{ product.id }}" data-action="add"
+                    class="btn btn-outline-secondary add-btn update-cart">Add to Cart
+            </button>
+        </form>
 
 
-{% endcomment %}
-</ul>
-<p>{{ product.description | safe }}</p>
-{% endblock %}
+        <p id="cart-total">{{cartItems}}</p>
+        <img src="{{ product.photo.url }}" class="img-fluid" alt="..." width="600" height="600">
+        {% else %}
+        <img src="{% static 'img/no-image.png' %}" class="img-fluid" alt="..." width="600" height="600">
+        {% endif %}
+    </div>
+
+
+    <p>{{ product.description | safe }}</p>
+    {% endblock %}

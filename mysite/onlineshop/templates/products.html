@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block "title" %} Geles {% endblock %}
+{% block "title" %} Augalų parduotuvė {% endblock %}
 
 {% block "content" %}
 {% load static %}
@@ -69,6 +69,7 @@
 
                 <p id="cart-total">{{cartItems}}</p>
 
+
             </div>
         </div>
     </div>
@@ -102,7 +103,7 @@
             {% endif %}
         </nav>
     </div>
-    <script src="{% static 'js/cart.js' %}"></script>
+
 
     <style>
         .green-pagination .page-link {
@@ -113,7 +114,7 @@
             color: dark green;
         }
         </style>
-        <script src="{% static 'js/blog.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+
 {% endblock %}
 
