@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 
-{% block "title" %}Mano Užsakymai{% endblock %}
+{% block title %}Mano Užsakymai{% endblock %}
 
 {% block "content" %}
 
-{% for order in orders %}
-<a href="{% url 'order' order.id %}">
+{% if orders %}
+    {% for order in orders %}
+        {% if order %}
+            <a href="{% url 'order' order.id %}">
+                <p>{{ order }}</p>
+            </a>
+            <hr>
+        {% endif %}
+    {% empty %}
+        <p>Nera uzsakymu</p>
+    {% endfor %}
+{% else %}
+    <p>Nera uzsakymu</p>
+{% endif %}
 
-<p>{{ order }}</p>
-</a>
-<hr>
-{% endfor %}
 {% endblock %}
-
-

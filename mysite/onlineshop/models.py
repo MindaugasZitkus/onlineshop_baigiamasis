@@ -5,6 +5,8 @@ from PIL import Image
 
 
 
+
+
 # Create your models here.
 
 class Status(models.Model):
@@ -43,12 +45,32 @@ class Product(models.Model):
         return url
 
 
+
+
+
 class Order(models.Model):
     customer = models.ForeignKey(to=Customer, verbose_name="Klientas", on_delete=models.SET_NULL, null=True, blank=True)
     date_ordered = models.DateTimeField(verbose_name="Užsakymo data", auto_now_add=True)
     complete = models.BooleanField(verbose_name="užbaigta", default=False)
     transaction_id = models.CharField(verbose_name="pavedimo id", max_length=100, null=True)
     status = models.ForeignKey(to="Status", verbose_name="Būsena", on_delete=models.SET_NULL, null=True)
+    # orderitem_set = models.ForeignKey(to=OrderItem, related_name='order', on_delete=models.CASCADE)
+
+
+
+
+
+    @property
+    def get_cart_total(self):
+        orderitems = self.lines.all()  # Naudoti "lines" o ne  "orderitem_set"
+        total = sum([item.get_total for item in orderitems])
+        return total
+
+    @property
+    def get_cart_items(self):
+        orderitems = self.lines.all()  # Use "lines" instead of "orderitem_set"
+        total = sum([item.quantity for item in orderitems])
+        return total
 
 
     def total(self):
@@ -61,26 +83,7 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.customer}, {self.date_ordered}, {self.status} "
 
-    @property
-    def shipping(self):
-        shipping = False
-        orderitems = self.orderitem_set.all()
-        for i in orderitems:
-            if i.product.digital == False:
-                shipping = True
-        return shipping
 
-    @property
-    def get_cart_total(self):
-        orderitems = self.orderitem_set.all()
-        total = sum([item.get_total for item in orderitems])
-        return total
-
-    @property
-    def get_cart_items(self):
-        orderitems = self.orderitem_set.all()
-        total = sum([item.quantity for item in orderitems])
-        return total
 
 
 class OrderItem(models.Model):

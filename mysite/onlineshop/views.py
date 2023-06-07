@@ -81,14 +81,16 @@ class MyOrderListView(generic.ListView):
 
 def cart(request):
     data = cartData(request)
-
-    cartItems = data['cartItems']
-    order = data['order']
     items = data['items']
+    order = data['order']
+    cartItems = data['cartItems']
 
     context = {'items': items, 'order': order, 'cartItems': cartItems}
-    return render(request, 'cart.html', context)
 
+    if request.user.is_authenticated:
+        return render(request,'cart_authenticated.html' , context)
+    else:
+        return render(request, 'cart.html', context)
 
 
 
