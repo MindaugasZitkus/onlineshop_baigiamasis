@@ -5,18 +5,18 @@
 {% block "content" %}
 
 {% if orders %}
-    {% for order in orders %}
-        {% if order %}
-            <a href="{% url 'order' order.id %}">
-                <p>{{ order }}</p>
-            </a>
-            <hr>
-        {% endif %}
-    {% empty %}
-        <p>Nera uzsakymu</p>
-    {% endfor %}
+{% for order in orders %}
+{% if order %}
+<a href="{% url 'order' order.id %}">
+    <p>{{ order }}</p>
+</a>
+<hr>
+{% endif %}
+{% empty %}
+<p>Nera uzsakymu</p>
+{% endfor %}
 {% else %}
-    <p>Nera uzsakymu</p>
+<p>Nera uzsakymu</p>
 {% endif %}
 
 {% endblock %}

@@ -165,7 +165,7 @@ def updateItem(request):
 
     response_data = {
         'message': 'Item was added',
-        'productId': productId  # Include product ID in the response
+        'productId': productId  # prideti product ID
     }
 
     return JsonResponse(response_data, safe=False)

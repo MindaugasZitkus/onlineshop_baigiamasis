@@ -3,9 +3,18 @@
 {% block "title" %}Užsakymas{% endblock %}
 
 {% block "content" %}
-<p><stong>Klientas: </stong>{{ order.customer }}</p>
-<p><stong>Data: </stong>{{ order.date_ordered }}</p>
-<p><stong>Būsena: </stong>{{ order.status }}</p>
+<p>
+    <stong>Klientas:</stong>
+    {{ order.customer }}
+</p>
+<p>
+    <stong>Data:</stong>
+    {{ order.date_ordered }}
+</p>
+<p>
+    <stong>Būsena:</stong>
+    {{ order.status }}
+</p>
 
 
 <style>
@@ -18,27 +27,28 @@
   .light-table th {
     border-color: green; /* Set green outline color */
   }
+
 </style>
 
 <table class="table light-table">
-  <thead>
+    <thead>
     <tr>
-      <th scope="col">Produktas</th>
-      <th scope="col">Kaina (€)</th>
-      <th scope="col">Kiekis</th>
-      <th scope="col">Bendra suma (€)</th>
+        <th scope="col">Produktas</th>
+        <th scope="col">Kaina (€)</th>
+        <th scope="col">Kiekis</th>
+        <th scope="col">Bendra suma (€)</th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     {% for line in order.lines.all %}
     <tr>
-      <td>{{ line.product }}</td>
-      <td>{{ line.product.price }}</td>
-      <td>{{ line.quantity }}</td>
-      <td>{{ line.sum }}</td>
+        <td>{{ line.product }}</td>
+        <td>{{ line.product.price }}</td>
+        <td>{{ line.quantity }}</td>
+        <td>{{ line.sum }}</td>
     </tr>
     {% endfor %}
-  </tbody>
+    </tbody>
 </table>
 <p><strong>Bendra suma:</strong> {{ order.total }}</p>
 <hr>

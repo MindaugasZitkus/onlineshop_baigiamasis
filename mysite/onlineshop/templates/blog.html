@@ -2,22 +2,22 @@
 {% load static %}
 
 {% block "content" %}
-  <h1>Patarimai</h1>
+<h1>Patarimai</h1>
 
-  {% for blog in blogs %}
-    <div class="blog-post">
-      <h2>{{ blog.title }}</h2>
-      <p class="short-text">{{ blog.content|truncatechars:200 }}</p>
-      <p class="full-text" style="display: none;">{{ blog.content }}</p>
-      <p>Created at: {{ blog.created_at }}</p>
-      <button class="read-more-btn custom-button">Skaityti daugiau</button>
-    </div>
-  {% endfor %}
-
+{% for blog in blogs %}
+<div class="blog-post">
+    <h2>{{ blog.title }}</h2>
+    <p class="short-text">{{ blog.content|truncatechars:200 }}</p>
+    <p class="full-text" style="display: none;">{{ blog.content }}</p>
+    <p>Created at: {{ blog.created_at }}</p>
+    <button class="read-more-btn custom-button">Skaityti daugiau</button>
+</div>
+{% endfor %}
+<!-- jquery mygtuko skriptas -->
 <script
-  src="https://code.jquery.com/jquery-3.7.0.js"
-  integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-  crossorigin="anonymous"></script>
+        src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+        crossorigin="anonymous"></script>
 <script src="{% static 'js/blog.js' %}"></script>
 
 <style>
@@ -26,6 +26,7 @@
   padding: 10px;
   margin-bottom: 20px
 }
+
 </style>
 
 
@@ -42,6 +43,7 @@
 .custom-button:hover {
   background-color: #45a049; /* Pakeisti spalva */
 }
+
 </style>
 
 

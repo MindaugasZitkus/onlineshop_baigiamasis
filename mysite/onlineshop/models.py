@@ -7,7 +7,7 @@ from PIL import Image
 
 
 
-# Create your models here.
+
 
 class Status(models.Model):
     name = models.CharField(verbose_name="Pavadinimas", max_length=50)
@@ -29,7 +29,6 @@ class Product(models.Model):
     name = models.CharField(verbose_name="Produkto pavadinimas", max_length=200)
     price = models.FloatField(verbose_name="Kaina")
     digital = models.BooleanField(default=False, null=True, blank=True)
-    # image = models.ImageField(verbose_name="Nuotrauka", null=True, blank=True)
     photo = models.ImageField(verbose_name="Nuotrauka", upload_to="products", null=True, blank=True)
     description = HTMLField(verbose_name="Aprašymas", null=True, blank=True)
 
@@ -68,7 +67,7 @@ class Order(models.Model):
 
     @property
     def get_cart_items(self):
-        orderitems = self.lines.all()  # Use "lines" instead of "orderitem_set"
+        orderitems = self.lines.all()  # Naudoti "lines" o ne "orderitem_set"
         total = sum([item.quantity for item in orderitems])
         return total
 

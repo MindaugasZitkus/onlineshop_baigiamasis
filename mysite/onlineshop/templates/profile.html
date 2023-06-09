@@ -9,28 +9,29 @@
 .form-group select {
   border-color: lightblue;
 }
+
 </style>
 
 <div class="content-section">
-  <div class="media">
-    <img class="account-img" src="{{ user.profile.photo.url }}" style="margin-right: 20px;">
-    <div class="media-body">
-      <h2 class="account-heading" style="margin-bottom: 10px;">{{ user.username }}</h2>
-      <p class="text-secondary">{{ user.email }}</p>
+    <div class="media">
+        <img class="account-img" src="{{ user.profile.photo.url }}" style="margin-right: 20px;">
+        <div class="media-body">
+            <h2 class="account-heading" style="margin-bottom: 10px;">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
     </div>
-  </div>
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% load crispy_forms_tags %}
-    <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Profilio info</legend>
-      {{ u_form|crispy }}
-      {{ p_form|crispy }}
-    </fieldset>
-    <div class="form-group">
-      <button class="btn btn-outline-info" type="submit">Atnaujinti</button>
-    </div>
-  </form>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% load crispy_forms_tags %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Profilio info</legend>
+            {{ u_form|crispy }}
+            {{ p_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Atnaujinti</button>
+        </div>
+    </form>
 </div>
 
 

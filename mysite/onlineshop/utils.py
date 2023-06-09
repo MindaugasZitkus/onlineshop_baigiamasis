@@ -83,7 +83,7 @@ def guestOrder(request, data):
         product = Product.objects.get(id=item['id'])
         quantity = item['quantity'] if item['quantity'] > 0 else -1 * item['quantity']
 
-        orderItem = OrderItem.objects.create(
+        OrderItem = OrderItem.objects.create(
             product=product,
             order=order,
             quantity=quantity,

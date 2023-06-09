@@ -6,12 +6,12 @@
 
 {% for order in orders %}
 <a href="{% url 'order' order.id %}">
-<p>{{ order }}</p>
+    <p>{{ order }}</p>
 </a>
 <hr>
 
 {% endfor %}
-  <div class="pagination">
+<div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; pirmas</a>
