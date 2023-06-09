@@ -230,6 +230,7 @@ def register(request):
             return redirect('register')
     return render(request, 'registration/register.html')
 
+@csrf_protect
 @login_required
 def profile(request):
     if request.method == "POST":
